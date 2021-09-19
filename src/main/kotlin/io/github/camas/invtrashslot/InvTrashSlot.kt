@@ -2,7 +2,7 @@ package io.github.camas.invtrashslot
 
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry
-import net.minecraft.client.options.KeyBinding
+import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import net.minecraft.item.ItemStack
 import net.minecraft.screen.ScreenHandler
@@ -25,6 +25,7 @@ fun init() {
         // Get slot to be trashed
         val toTrashSlot = context.player.currentScreenHandler.getSlot(slotId)
         // Return early if player can't take items or slot is trashslot
+
         if (!toTrashSlot.canTakeItems(context.player) || toTrashSlot.inventory is TrashSlotInventory) {
             return@register
         }
@@ -40,7 +41,7 @@ fun init() {
         val currentStack = trashInv.getStack(0)
 
         // Trash item
-        if (ScreenHandler.canStacksCombine(currentStack, toTrash)) {
+        if (ItemStack.canCombine(currentStack, toTrash)) {
             val newCount = currentStack.count + toTrash.count
             currentStack.count = newCount.coerceAtMost(currentStack.maxCount)
         } else {

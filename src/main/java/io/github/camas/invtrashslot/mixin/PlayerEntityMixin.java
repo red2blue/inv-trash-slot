@@ -5,7 +5,7 @@ import io.github.camas.invtrashslot.PlayerTrashSlot;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,17 +32,17 @@ public abstract class PlayerEntityMixin implements ITrashSlot {
     /**
      * Reads trash slot data after other player data has been read
      */
-    @Inject(method = "readCustomDataFromTag(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"))
-    private void InvTrashSlot$readCustomDataFromTag(CompoundTag tag, CallbackInfo info) {
-        getTrashSlot().readFromTag(tag);
+    @Inject(method = "readCustomDataFromTag(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("TAIL"))
+    private void InvTrashSlot$readCustomDataFromTag(NbtCompound tag, CallbackInfo info) {
+        getTrashSlot().read(tag);
     }
 
     /**
      * Writes trash slot data after other player data has been written
      */
-    @Inject(method = "writeCustomDataToTag(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"))
-    private void InvTrashSlot$writeCustomDataToTag(CompoundTag tag, CallbackInfo info) {
-        getTrashSlot().writeToTag(tag);
+    @Inject(method = "writeCustomDataToTag(Lnet/minecraft/nbt/NbtCompound;)V", at = @At("TAIL"))
+    private void InvTrashSlot$writeCustomDataToTag(NbtCompound tag, CallbackInfo info) {
+        getTrashSlot().write(tag);
     }
 
     /**
